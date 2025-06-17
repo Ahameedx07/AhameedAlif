@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahameed ALIF | Digital Creator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #f9d423;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --pubg: #FF9C00;
+            --freefire: #FF5C00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== Image Hero Section ===== */
+        .image-hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            z-index: 1;
+        }
+        
+        .hero-image.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            z-index: 3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 4;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .profile-container {
+            position: relative;
+            margin-bottom: 25px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        .portfolio-btn {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 3;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        .portfolio-btn:hover {
+            background: white;
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: none;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            animation: fadeIn 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .social-icons a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .social-icons a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== Game Buttons ===== */
+        .game-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .pubg-btn {
+            background: var(--pubg);
+        }
+        
+        .freefire-btn {
+            background: var(--freefire);
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        .game-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* ===== UID Popup ===== */
+        .uid-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .uid-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .uid-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .uid-popup.active .uid-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .close-popup:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+        
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .pubg-icon {
+            color: var(--pubg);
+        }
+        
+        .freefire-icon {
+            color: var(--freefire);
+        }
+        
+        .uid-display {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .uid-display::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copy-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Image Controls ===== */
+        .image-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 5;
+        }
+        
+        .image-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { 
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes lightning {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .portfolio-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+                bottom: -12px;
+            }
+            
+            .game-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .game-btn {
+                width: 180px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Image Hero Section -->
+    <section class="image-hero">
+        <!-- Image 1 -->
+        <div class="image-container">
+            <img src="2f5b07c2918f9ba6a009012adba4a060.png" class="hero-image active" alt="Ahameed's Work 1">
+        </div>
+        
+        <!-- Image 2 -->
+        <div class="image-container">
+            <img src="454e7a95940e2ffff30c8f53de1d4d0f.png" class="hero-image" alt="Ahameed's Work 2">
+        </div>
+        
+        <!-- Image 3 -->
+        <div class="image-container">
+            <img src="c066447637dc79062dd123668a1cad53.png" class="hero-image" alt="Ahameed's Work 3">
+        </div>
+        
+        <div class="image-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="profile-container">
+                <img src="file_00000000762461fdbc6240aee888d4e7.png" alt="Ahameed Alif" class="profile-pic">
+                <a href="https://ahameedplayz.netlify.app" target="_blank" class="portfolio-btn" title="My Portfolio">⚡</a>
+            </div>
+            
+            <h1>Ahameed ALIF</h1>
+            <p>📍Sarishabari, Jamalpur   🎥 Digital Storyteller | 🌏 Travel = Life   🎬 Creating Moments, Not Just Videos 💕</p>
+            
+            <div class="game-buttons">
+                <button class="game-btn pubg-btn" id="pubgBtn">
+                    <i class="fas fa-gamepad"></i> PUBG UID
+                </button>
+                <button class="game-btn freefire-btn" id="freefireBtn">
+                    <i class="fas fa-fire"></i> Free Fire ID
+                </button>
+            </div>
+            
+            <div class="social-icons">
+                <a href="https://facebook.com/itzalif007" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://youtube.com/Ahameedplayz" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://instagram.com/Ahameed.1" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/@Ahameedplayz" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://facebook.com/Ahameedplayz" target="_blank"><i class="fas fa-link"></i></a>
+            </div>
+        </div>
+        
+        <div class="image-controls">
+            <div class="image-indicator active" data-image="0"></div>
+            <div class="image-indicator" data-image="1"></div>
+            <div class="image-indicator" data-image="2"></div>
+        </div>
+    </section>
+
+    <!-- PUBG UID Popup -->
+    <div class="uid-popup" id="pubgPopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closePubgPopup">&times;</span>
+            <i class="fas fa-gamepad game-icon pubg-icon"></i>
+            <h3>PUBG Mobile UID</h3>
+            <div class="uid-display" id="pubgUid">516987654321</div>
+            <button class="copy-btn" id="copyPubgBtn">
+                <i class="fas fa-copy"></i> Copy UID
+            </button>
+        </div>
+    </div>
+
+    <!-- Free Fire UID Popup -->
+    <div class="uid-popup" id="freefirePopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closeFreefirePopup">&times;</span>
+            <i class="fas fa-fire game-icon freefire-icon"></i>
+            <h3>Free Fire ID</h3>
+            <div class="uid-display" id="freefireUid">1234567890</div>
+            <button class="copy-btn" id="copyFreefireBtn">
+                <i class="fas fa-copy"></i> Copy ID
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-rotating images
+        const images = document.querySelectorAll('.hero-image');
+        const indicators = document.querySelectorAll('.image-indicator');
+        let currentImageIndex = 0;
+        const imageChangeInterval = 5000; // 5 seconds
+        
+        function changeImage() {
+            // Hide current image
+            images[currentImageIndex].classList.remove('active');
+            indicators[currentImageIndex].classList.remove('active');
+            
+            // Move to next image
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            
+            // Show next image
+            images[currentImageIndex].classList.add('active');
+            indicators[currentImageIndex].classList.add('active');
+        }
+        
+        // Manual image selection
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function() {
+                const imageIndex = parseInt(this.getAttribute('data-image'));
+                
+                // Hide all images
+                images.forEach(image => image.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('active'));
+                
+                // Show selected image
+                images[imageIndex].classList.add('active');
+                this.classList.add('active');
+                
+                // Update current index
+                currentImageIndex = imageIndex;
+                
+                // Restart auto-rotation timer
+                clearInterval(imageRotation);
+                imageRotation = setInterval(changeImage, imageChangeInterval);
+            });
+        });
+        
+        // Start auto-rotation
+        let imageRotation = setInterval(changeImage, imageChangeInterval);
+        
+        // Pause on hover (optional)
+        const imageHero = document.querySelector('.image-hero');
+        imageHero.addEventListener('mouseenter', () => {
+            clearInterval(imageRotation);
+        });
+        
+        imageHero.addEventListener('mouseleave', () => {
+            imageRotation = setInterval(changeImage, imageChangeInterval);
+        });
+
+        // Lightning button effect
+        const lightningBtn = document.querySelector('.portfolio-btn');
+        lightningBtn.addEventListener('mouseover', () => {
+            lightningBtn.style.animation = 'lightning 0.5s';
+            setTimeout(() => {
+                lightningBtn.style.animation = 'bounce 2s infinite';
+            }, 500);
+        });
+
+        // Game UID Popups
+        const pubgBtn = document.getElementById('pubgBtn');
+        const freefireBtn = document.getElementById('freefireBtn');
+        const pubgPopup = document.getElementById('pubgPopup');
+        const freefirePopup = document.getElementById('freefirePopup');
+        const closePubgPopup = document.getElementById('closePubgPopup');
+        const closeFreefirePopup = document.getElementById('closeFreefirePopup');
+        const copyPubgBtn = document.getElementById('copyPubgBtn');
+        const copyFreefireBtn = document.getElementById('copyFreefireBtn');
+        const pubgUid = document.getElementById('pubgUid');
+        const freefireUid = document.getElementById('freefireUid');
+
+        // Open PUBG Popup
+        pubgBtn.addEventListener('click', () => {
+            pubgPopup.classList.add('active');
+        });
+
+        // Open Free Fire Popup
+        freefireBtn.addEventListener('click', () => {
+            freefirePopup.classList.add('active');
+        });
+
+        // Close Popups
+        closePubgPopup.addEventListener('click', () => {
+            pubgPopup.classList.remove('active');
+        });
+
+        closeFreefirePopup.addEventListener('click', () => {
+            freefirePopup.classList.remove('active');
+        });
+
+        // Close when clicking outside
+        [pubgPopup, freefirePopup].forEach(popup => {
+            popup.addEventListener('click', (e) => {
+                if (e.t
