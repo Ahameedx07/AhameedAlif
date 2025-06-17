@@ -3,17 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahameed Alif | Digital Creator</title>
+    <title>Ahameed Alif | Animated Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #f8d56b;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ===== Page Transition Styles ===== */
+        .page {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            padding: 80px 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+            transform: translateY(20px);
+            z-index: 1;
+        }
+        
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            z-index: 2;
+        }
+        
+        /* ===== Header & Navigation ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(30, 60, 114, 0.95);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        header.scrolled .logo {
+            color: white;
+        }
+        
+        nav {
+            display: flex;
+        }
+        
+        nav a {
+            margin-left: 30px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        header.scrolled nav a {
+            color: white;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: var(--accent);
+        }
+        
+        /* ===== Hero Page ===== */
+        #hero-page {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons {
+            margin-top: 30px;
+            animation: fadeIn 1s ease 0.9s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        /* ===== About Page ===== */
+        #about-page {
+            background: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .skills {
+            flex: 1;
+        }
+        
+        .skill-item {
+            margin-bottom: 20px;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+        
+        /* ===== Projects Page ===== */
+        #projects-page {
+            background: var(--light);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        
+        .project-card.animated {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        /* ===== Contact Page ===== */
+        #contact-page {
+            background: white;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .contact-item {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .contact-item.animated {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* ===== Popup Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease 0.2s;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo" data-page="hero-page">Ahameed</a>
+            
+            <nav id="navbar">
+                <a href="#" class="nav-link" data-page="hero-page">Home</a>
+                <a href="#" class="nav-link" data-page="about-page">About</a>
+                <a href="#" class="nav-link" data-page="projects-page">Projects</a>
+                <a href="#" class="nav-link" data-page="contact-page">Contact</a>
+                <a href="#" class="btn btn-small" id="resume-btn">Resume</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Pages -->
+    <div class="page active" id="hero-page">
+        <div class="container hero-content">
             <img src="profile.jpg" alt="Ahameed Alif" class="profile-pic">
             <h1>Ahameed Alif</h1>
-            <p>Digital Creator from Bangladesh</p>
+            <p>Digital Creator & Content Producer from Bangladesh</p>
+            
             <div class="social-icons">
                 <a href="https://facebook.com/itzalif007" target="_blank"><i class="fab fa-facebook"></i></a>
                 <a href="https://youtube.com/Ahameedplayz" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -21,57 +408,208 @@
                 <a href="https://tiktok.com/@Ahameedplayz" target="_blank"><i class="fab fa-tiktok"></i></a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- About Me -->
-    <section class="about">
+    <div class="page" id="about-page">
         <div class="container">
             <h2>About Me</h2>
-            <p>I'm Ahameed Alif, a solo digital creator from Bangladesh. I create content across multiple platforms including YouTube, TikTok and Instagram. I work alone but with big dreams!</p>
-        </div>
-    </section>
-
-    <!-- My Works -->
-    <section class="works">
-        <div class="container">
-            <h2>My Content</h2>
-            <div class="video-gallery">
-                <!-- Replace with your actual YouTube video ID -->
-                <iframe width="300" height="200" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Who Am I?</h3>
+                    <p>I'm Ahameed Alif, a passionate digital creator based in Bangladesh. I specialize in creating engaging content across multiple platforms including YouTube, TikTok, and Instagram.</p>
+                    <p>As a solo creator, I handle everything from content planning to video editing and social media management.</p>
+                </div>
+                
+                <div class="skills">
+                    <h3>My Skills</h3>
+                    
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Video Editing</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Content Creation</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Contact Me -->
-    <section class="contact">
+    <div class="page" id="projects-page">
+        <div class="container">
+            <h2>My Projects</h2>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://via.placeholder.com/600x400" alt="YouTube Content">
+                    </div>
+                    <div class="project-info">
+                        <h3>YouTube Channel</h3>
+                        <p>My main YouTube channel with creative content.</p>
+                        <a href="https://youtube.com/Ahameedplayz" target="_blank" class="btn">View Channel</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://via.placeholder.com/600x400" alt="TikTok Content">
+                    </div>
+                    <div class="project-info">
+                        <h3>TikTok Videos</h3>
+                        <p>Short-form creative content.</p>
+                        <a href="https://tiktok.com/@Ahameedplayz" target="_blank" class="btn">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="contact-page">
         <div class="container">
             <h2>Contact Me</h2>
-            <a href="mailto:Ahameedx88@gmail.com" class="btn">Email Me</a>
-            <a href="https://wa.me/8801679539643" class="btn whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
-    </section>
-
-    <!-- Social Links -->
-    <section class="social-links">
-        <div class="container">
-            <h2>Follow Me</h2>
-            <div class="links">
-                <a href="https://facebook.com/itzalif007" class="social-btn"><i class="fab fa-facebook"></i> Personal</a>
-                <a href="https://facebook.com/Ahameedplayz" class="social-btn"><i class="fab fa-facebook"></i> Page</a>
-                <a href="https://instagram.com/Ahameed.1" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://youtube.com/Ahameedplayz" class="social-btn"><i class="fab fa-youtube"></i> YouTube</a>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <div class="contact-text">
+                        <h3>Email</h3>
+                        <a href="mailto:Ahameedx88@gmail.com">Ahameedx88@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp contact-icon"></i>
+                    <div class="contact-text">
+                        <h3>WhatsApp</h3>
+                        <a href="https://wa.me/8801679539643">+880 1679 539643</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Ahameed Alif | All Rights Reserved</p>
-            <a href="#" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+    <!-- Resume Popup -->
+    <div class="modal-overlay" id="resume-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Download Resume</h2>
+            <p>Click the button below to download my resume:</p>
+            <a href="#" class="btn">Download PDF</a>
         </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Page Navigation
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const logo = document.querySelector('.logo');
+        
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                    
+                    // Animate elements when page becomes active
+                    if (pageId === 'projects-page') {
+                        animateProjectCards();
+                    } else if (pageId === 'contact-page') {
+                        animateContactItems();
+                    }
+                }
+            });
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // Add click event to all navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.dataset.page);
+            });
+        });
+        
+        // Logo click goes to home
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('hero-page');
+        });
+        
+        // Animate project cards
+        function animateProjectCards() {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animated');
+                }, index * 200);
+            });
+        }
+        
+        // Animate contact items
+        function animateContactItems() {
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animated');
+                }, index * 200);
+            });
+        }
+        
+        // Resume popup
+        const resumeBtn = document.getElementById('resume-btn');
+        const resumeModal = document.getElementById('resume-modal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        resumeBtn.addEventListener('click', () => {
+            resumeModal.classList.add('active');
+        });
+        
+        closeModal.addEventListener('click', () => {
+            resumeModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        resumeModal.addEventListener('click', (e) => {
+            if (e.target === resumeModal) {
+                resumeModal.classList.remove('active');
+            }
+        });
+        
+        // Animate skill bars when in view
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.dataset.width;
+                bar.style.width = width;
+            });
+        }
+        
+        // Initialize first page
+        showPage('hero-page');
+        
+        // Animate skill bars after a short delay
+        setTimeout(animateSkillBars, 500);
+    </script>
 </body>
 </html>
