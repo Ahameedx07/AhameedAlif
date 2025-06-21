@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahameed ALIF | Digital Creator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #f9d423;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --pubg: #FF9C00;
+            --freefire: #FF5C00;
+            --menu-bg: rgba(26, 26, 26, 0.9);
+            --telegram: #0088cc;
+            --social: #3b5998;
+            --youtube: #ff0000;
+            --instagram: #e4405f;
+            --tiktok: #010101;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== Shooting Stars Animation ===== */
+        .shooting-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: shootingStar linear infinite;
+        }
+        
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0) scale(0);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(1000px) translateY(300px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0 20px;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .profile-container {
+            position: relative;
+            margin-bottom: 25px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        .portfolio-btn {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 3;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        .portfolio-btn:hover {
+            background: white;
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: none;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease;
+            position: relative;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            animation: expand 1.5s ease-out forwards;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            animation: fadeIn 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .social-icons a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .social-icons a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== Game Buttons ===== */
+        .game-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .game-btn:hover::before {
+            left: 100%;
+        }
+        
+        .pubg-btn {
+            background: var(--pubg);
+        }
+        
+        .freefire-btn {
+            background: var(--freefire);
+        }
+        
+        .telegram-btn {
+            background: var(--telegram);
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .game-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* ===== UID Popup ===== */
+        .uid-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .uid-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .uid-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: popIn 0.4s ease-out forwards;
+        }
+        
+        .uid-popup.active .uid-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .close-popup:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+        
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .pubg-icon {
+            color: var(--pubg);
+        }
+        
+        .freefire-icon {
+            color: var(--freefire);
+        }
+        
+        .telegram-icon {
+            color: var(--telegram);
+        }
+        
+        .uid-display {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .uid-display::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+        
+        .copy-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .copy-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        .copy-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Three Dot Menu ===== */
+        .menu-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .menu-btn i {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .menu-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: var(--menu-bg);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 30px;
+            z-index: 101;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .menu-content.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .menu-header h3 {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .close-menu {
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-menu:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+        
+        .menu-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .category {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .category-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .menu-link i {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .menu-link span {
+            flex: 1;
+        }
+
+        /* ===== Link Popup ===== */
+        .link-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .link-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .link-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: popIn 0.4s ease-out forwards;
+        }
+        
+        .link-popup.active .link-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .link-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .social-icon {
+            color: var(--social);
+        }
+        
+        .youtube-icon {
+            color: var(--youtube);
+        }
+        
+        .instagram-icon {
+            color: var(--instagram);
+        }
+        
+        .tiktok-icon {
+            color: var(--tiktok);
+        }
+        
+        .website-icon {
+            color: var(--primary);
+        }
+        
+        .link-url {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1rem;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            word-break: break-all;
+            animation: fadeInUp 0.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .visit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out 0.4s forwards;
+            opacity: 0;
+            text-decoration: none;
+        }
+        
+        .visit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { 
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes lightning {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes expand {
+            0% { width: 0; }
+            100% { width: 100px; }
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        
+        @keyframes popIn {
+            0% {
+                transform: translateY(20px) scale(0.9);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.05);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .portfolio-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+                bottom: -12px;
+            }
+            
+            .game-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .game-btn {
+                width: 180px;
+                justify-content: center;
+            }
+            
+            .menu-btn {
+                top: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shooting Stars Animation -->
+    <div class="shooting-stars" id="shootingStars"></div>
+
+    <!-- Three Dot Menu Button -->
+    <div class="menu-btn" id="menuBtn">
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <!-- Menu Content -->
+    <div class="menu-content" id="menuContent">
+        <div class="menu-header">
+            <h3>Quick Links</h3>
+            <i class="fas fa-times close-menu" id="closeMenu"></i>
+        </div>
+        <div class="menu-categories" id="menuCategories">
+            <!-- Categories will be added dynamically via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="profile-container">
+            <img src="file_00000000762461fdbc6240aee888d4e7.png" alt="Ahameed Alif" class="profile-pic">
+            <a href="https://ahameedplayz.netlify.app" target="_blank" class="portfolio-btn" title="My Portfolio">⚡</a>
+        </div>
+        
+        <h1>Ahameed ALIF</h1>
+        <p>📍Sarishabari, Jamalpur   🎥 Digital Storyteller | 🌏 Travel = Life   🎬 Creating Moments, Not Just Videos 💕</p>
+        
+        <div class="game-buttons">
+            <button class="game-btn pubg-btn" id="pubgBtn">
+                <i class="fas fa-gamepad"></i> PUBG UID
+            </button>
+            <button class="game-btn freefire-btn" id="freefireBtn">
+                <i class="fas fa-fire"></i> Free Fire ID
+            </button>
+            <button class="game-btn telegram-btn" id="telegramBtn">
+                <i class="fab fa-telegram"></i> Telegram
+            </button>
+        </div>
+        
+        <div class="social-icons">
+            <a href="https://facebook.com/itzalif007" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@Ahameedplayz" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com/Ahameed.1" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@Ahameedplayz" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://facebook.com/Ahameedplayz" target="_blank"><i class="fas fa-link"></i></a>
+        </div>
+    </section>
+
+    <!-- PUBG UID Popup -->
+    <div class="uid-popup" id="pubgPopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closePubgPopup">&times;</span>
+            <i class="fas fa-gamepad game-icon pubg-icon"></i>
+            <h3>PUBG Mobile UID</h3>
+            <div class="uid-display" id="pubgUid">5817949200</div>
+            <button class="copy-btn" id="copyPubgBtn">
+                <i class="fas fa-copy"></i> Copy UID
+            </button>
+        </div>
+    </div>
+
+    <!-- Free Fire UID Popup -->
+    <div class="uid-popup" id="freefirePopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closeFreefirePopup">&times;</span>
+            <i class="fas fa-fire game-icon freefire-icon"></i>
+            <h3>Free Fire ID</h3>
+            <div class="uid-display" id="freefireUid">1173603744</div>
+            <button class="copy-btn" id="copyFreefireBtn">
+                <i class="fas fa-copy"></i> Copy ID
+            </button>
+        </div>
+    </div>
+
+    <!-- Telegram Popup -->
+    <div class="uid-popup" id="telegramPopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closeTelegramPopup">&times;</span>
+            <i class="fab fa-telegram game-icon telegram-icon"></i>
+            <h3>Telegram Links</h3>
+            <div class="menu-links" style="background: transparent; margin: 20px 0;">
+                <a href="https://t.me/+rlgw81MmBxA3YTdl" target="_blank" class="menu-link">
+                    <i class="fas fa-users"></i>
+                    <span>Learning Group</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://t.me/d9de_pro" target="_blank" class="menu-link">
+                    <i class="fas fa-user-friends"></i>
+                    <span>D9DE Group</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://t.me/ahameedx" target="_blank" class="menu-link">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin Contact</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Popup -->
+    <div class="link-popup" id="linkPopup">
+        <div class="link-content">
+            <span class="close-popup" id="closeLinkPopup">&times;</span>
+            <i class="fas fa-link link-icon" id="linkIcon"></i>
+            <h3 id="linkTitle">Link</h3>
+            <div class="link-url" id="linkUrl">https://example.com</div>
+            <a href="#" target="_blank" class="visit-btn" id="visitLinkBtn">
+                <i class="fas fa-external-link-alt"></i> Visit Link
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Shooting Stars Animation
+        function createShootingStars() {
+            const container = document.getElementById('shootingStars');
+            const starCount = 15;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random size
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 5;
+                star.style.animation = `shootingStar ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(star);
+            }
+        }
+        
+        createShootingStars();
+
+        // Lightning button effect
+        const lightningBtn = document.querySelector('.portfolio-btn');
+        lightningBtn.addEventListener('mouseover', () => {
+            lightningBtn.style.animation = 'lightning 0.5s';
+            setTimeout(() => {
+                lightningBtn.style.animation = 'bounce 2s infinite';
+            }, 500);
+        });
+
+        // Game UID Popups
+        const pubgBtn = document.getElementById('pubgBtn');
+        const freefireBtn = document.getElementById('freefireBtn');
+        const telegramBtn = document.getElementById('telegramBtn');
+        const pubgPopup = document.getElementById('pubgPopup');
+        const freefirePopup = document.getElementById('freefirePopup');
+        const telegramPopup = document.getElementById('telegramPopup');
+        const closePubgPopup = document.getElementById('closePubgPopup');
+        const closeFreefirePopup = document.getElementById('closeFreefirePopup');
+        const closeTelegramPopup = document.getElementById('closeTelegramPopup');
+        const copyPubgBtn = document.getElementById('copyPubgBtn');
+        const copyFreefireBtn = document.getElementById('copyFreefireBtn');
+        const pubgUid = document.getElementById('pubgUid');
+        const freefireUid = document.getElementById('freefireUid');
+
+        // Open PUBG Popup
+        pubgBtn.addEventListener('click', () => {
+            pubgPopup.classList.add('active');
+        });
+
+        // Open Free Fire Popup
+        freefireBtn.addEventListener('click', () => {
+            freefirePopup.classList.add('active');
+        });
+
+        // Open Telegram Popup
+        telegramBtn.addEventListener('click', () => {
+            telegramPopup.classList.add('active');
+        });
+
+        // Close Popups
+        closePubgPopup.addEventListener('click', () => {
+            pubgPopup.classList.remove('active');
+        });
+
+        closeFreefirePopup.addEventListener('click', () => {
+            freefirePopup.classList.remove('active');
+        });
+
+        closeTelegramPopup.addEventListener('click', () => {
+            telegramPopup.classList.remove('active');
+        });
+
+        // Close when clicking outside
+        [pubgPopup, freefirePopup, telegramPopup].forEach(popup => {
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    popup.classList.remove('active');
+                }
+            });
+        });
+
+        // Copy UID functionality
+        copyPubgBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(pubgUid.textContent);
+            copyPubgBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyPubgBtn.innerHTML = '<i class="fas fa-copy"></i> Copy UID';
+            }, 2000);
+        });
+
+        copyFreefireBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(freefireUid.textContent);
+            copyFreefireBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyFreefireBtn.innerHTML = '<i class="fas fa-copy"></i> Copy ID';
+            }, 2000);
+        });
+
+        // Three Dot Menu Functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuContent = document.getElementById('menuContent');
+        const closeMenu = document.getElementById('closeMenu');
+        const menuCategories = document.getElementById('menuCategories');
+
+        // Toggle Menu
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('active');
+            menuContent.classList.add('active');
+        });
+
+        // Close Menu
+        closeMenu.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+            menuContent.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+            menuContent.classList.remove('active');
+        });
+
+        // Link Popup Functionality
+        const linkPopup = document.getElementById('linkPopup');
+        const closeLinkPopup = document.getElementById('closeLinkPopup');
+        const linkIcon = document.getElementById('linkIcon');
+        const linkTitle = document.getElementById('linkTitle');
+        const linkUrl = document.getElementById('linkUrl');
+        const visitLinkBtn = document.getElementById('visitLinkBtn');
+
+        closeLinkPopup.addEventListener('click', () => {
+            linkPopup.classList.remove('active');
+        });
+
+        linkPopup.addEventListener('click', (e) => {
+            if (e.target === linkPopup) {
+                linkPopup.classList.remove('active');
+            }
+        });
+
+        function showLinkPopup(title, url, iconClass, iconColorClass) {
+            linkTitle.textContent = title;
+            linkUrl.textContent = url;
+            visitLinkBtn.href = url;
+            linkIcon.className = `fas ${iconClass} link-icon ${iconColorClass}`;
+            linkPopup.classList.add('active');
+        }
+
+        // Add categories and links to menu
+        const categories = [
+            {
+                title: "Social Media",
+                icon: "fa-share-alt",
+                links: [
+                    { icon: 'fab fa-facebook', title: 'Facebook', url: 'https://facebook.com/itzalif007', iconClass: 'fa-facebook', iconColorClass: 'social-icon' },
+                    { icon: 'fab fa-youtube', title: 'YouTube', url: 'https://youtube.com/@Ahameedplayz', iconClass: 'fa-youtube', iconColorClass: 'youtube-icon' },
+                    { icon: 'fab fa-instagram', title: 'Instagram', url: 'https://instagram.com/Ahameed.1', iconClass: 'fa-instagram', iconColorClass: 'instagram-icon' },
+                    { icon: 'fab fa-tiktok', title: 'TikTok', url: 'https://tiktok.com/@Ahameedplayz', iconClass: 'fa-tiktok', iconColorClass: 'tiktok-icon' }
+                ]
+            },
+            {
+                title: "Telegram",
+                icon: "fab fa-telegram",
+                links: [
+                    { icon: 'fas fa-users', title: 'Learning Group', url: 'https://t.me/+rlgw81MmBxA3YTdl', iconClass: 'fa-users', iconColorClass: 'telegram-icon' },
+                    { icon: 'fas fa-user-friends', title: 'D9DE Group', url: 'https://t.me/d9de_pro', iconClass: 'fa-user-friends', iconColorClass: 'telegram-icon' },
+                    { icon: 'fas fa-user-shield', title: 'Admin Contact', url: 'https://t.me/ahameedx', iconClass: 'fa-user-shield', iconColorClass: 'telegram-icon' }
+                ]
+            },
+            {
+                title: "Other Links",
+                icon: "fas fa-link",
+                links: [
+                    { icon: 'fas fa-globe', title: 'Website', url: 'https://ahameedplayz.netlify.app', iconClass: 'fa-globe', iconColorClass: 'website-icon' },
+                    { icon: 'fas fa-link', title: 'Facebook Page', url: 'https://facebook.com/Ahameedplayz', iconClass: 'fa-link', iconColorClass: 'social-icon' }
+                ]
+            }
+        ];
+
+        categories.forEach(category => {
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'category';
+            
+            const titleElement = document.createElement('div');
+            titleElement.className = 'category-title';
+            titleElement.innerHTML = `<i class="fas ${category.icon}"></i> ${category.title}`;
+            
+            const linksElement = document.createElement('div');
+            linksElement.className = 'menu-links';
+            
+            category.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.className = 'menu-link';
+                linkElement.href = '#';
+                linkElement.innerHTML = `
+                    <i class="${link.icon}"></i>
+                    <span>${link.title}</span>
+                    <i class="fas fa-external-link-alt"></i>
+                `;
+                
+                linkElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showLinkPopup(link.title, link.url, link.iconClass, link.iconColorClass);
+                    menuOverlay.classList.remove('active');
+                    menuContent.classList.remove('active');
+                });
+                
+                linksElement.appendChild(linkElement);
+            });
+            
+            categoryElement.appendChild(titleElement);
+            categoryElement.appendChild(linksElement);
+            menuCategories.appendChild(categoryElement);
+        });
+
+        // Ripple effect for buttons
+        const buttons = document.querySelectorAll('.copy-btn, .game-btn, .visit-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Get mouse position relative to button
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create ripple element
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                // Add ripple to button
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
