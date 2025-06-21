@@ -747,4 +747,254 @@
         <div class="hero-content">
             <div class="profile-container">
                 <img src="file_00000000762461fdbc6240aee888d4e7.png" alt="Ahameed Alif" class="profile-pic">
-                <a href="https://ahameedplayz.netlify.app" target="_blank" class="portfolio-btn" title="My Portfolio"
+                <a href="https://ahameedplayz.netlify.app" target="_blank" class="portfolio-btn" title="My Portfolio">⚡</a>
+            </div>
+            
+            <h1>Ahameed ALIF</h1>
+            <p>📍Sarishabari, Jamalpur   🎥 Digital Storyteller | 🌏 Travel = Life   🎬 Creating Moments, Not Just Videos 💕</p>
+            
+            <div class="game-buttons">
+                <button class="game-btn pubg-btn" id="pubgBtn">
+                    <i class="fas fa-gamepad"></i> PUBG UID
+                </button>
+                <button class="game-btn freefire-btn" id="freefireBtn">
+                    <i class="fas fa-fire"></i> Free Fire ID
+                </button>
+            </div>
+            
+            <div class="social-icons">
+                <a href="https://facebook.com/itzalif007" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://youtube.com/@Ahameedplayz" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://instagram.com/Ahameed.1" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/@Ahameedplayz" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://facebook.com/Ahameedplayz" target="_blank"><i class="fas fa-link"></i></a>
+            </div>
+        </div>
+        
+        <div class="image-controls">
+            <div class="image-indicator active" data-image="0"></div>
+            <div class="image-indicator" data-image="1"></div>
+            <div class="image-indicator" data-image="2"></div>
+        </div>
+    </section>
+
+    <!-- PUBG UID Popup -->
+    <div class="uid-popup" id="pubgPopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closePubgPopup">&times;</span>
+            <i class="fas fa-gamepad game-icon pubg-icon"></i>
+            <h3>PUBG Mobile UID</h3>
+            <div class="uid-display" id="pubgUid">5817949200</div>
+            <button class="copy-btn" id="copyPubgBtn">
+                <i class="fas fa-copy"></i> Copy UID
+            </button>
+        </div>
+    </div>
+
+    <!-- Free Fire UID Popup -->
+    <div class="uid-popup" id="freefirePopup">
+        <div class="uid-content">
+            <span class="close-popup" id="closeFreefirePopup">&times;</span>
+            <i class="fas fa-fire game-icon freefire-icon"></i>
+            <h3>Free Fire ID</h3>
+            <div class="uid-display" id="freefireUid">1173603744</div>
+            <button class="copy-btn" id="copyFreefireBtn">
+                <i class="fas fa-copy"></i> Copy ID
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-rotating images
+        const images = document.querySelectorAll('.hero-image');
+        const indicators = document.querySelectorAll('.image-indicator');
+        let currentImageIndex = 0;
+        const imageChangeInterval = 5000; // 5 seconds
+        
+        function changeImage() {
+            // Hide current image
+            images[currentImageIndex].classList.remove('active');
+            indicators[currentImageIndex].classList.remove('active');
+            
+            // Move to next image
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            
+            // Show next image
+            images[currentImageIndex].classList.add('active');
+            indicators[currentImageIndex].classList.add('active');
+        }
+        
+        // Manual image selection
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function() {
+                const imageIndex = parseInt(this.getAttribute('data-image'));
+                
+                // Hide all images
+                images.forEach(image => image.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('active'));
+                
+                // Show selected image
+                images[imageIndex].classList.add('active');
+                this.classList.add('active');
+                
+                // Update current index
+                currentImageIndex = imageIndex;
+                
+                // Restart auto-rotation timer
+                clearInterval(imageRotation);
+                imageRotation = setInterval(changeImage, imageChangeInterval);
+            });
+        });
+        
+        // Start auto-rotation
+        let imageRotation = setInterval(changeImage, imageChangeInterval);
+        
+        // Pause on hover (optional)
+        const imageHero = document.querySelector('.image-hero');
+        imageHero.addEventListener('mouseenter', () => {
+            clearInterval(imageRotation);
+        });
+        
+        imageHero.addEventListener('mouseleave', () => {
+            imageRotation = setInterval(changeImage, imageChangeInterval);
+        });
+
+        // Lightning button effect
+        const lightningBtn = document.querySelector('.portfolio-btn');
+        lightningBtn.addEventListener('mouseover', () => {
+            lightningBtn.style.animation = 'lightning 0.5s';
+            setTimeout(() => {
+                lightningBtn.style.animation = 'bounce 2s infinite';
+            }, 500);
+        });
+
+        // Game UID Popups
+        const pubgBtn = document.getElementById('pubgBtn');
+        const freefireBtn = document.getElementById('freefireBtn');
+        const pubgPopup = document.getElementById('pubgPopup');
+        const freefirePopup = document.getElementById('freefirePopup');
+        const closePubgPopup = document.getElementById('closePubgPopup');
+        const closeFreefirePopup = document.getElementById('closeFreefirePopup');
+        const copyPubgBtn = document.getElementById('copyPubgBtn');
+        const copyFreefireBtn = document.getElementById('copyFreefireBtn');
+        const pubgUid = document.getElementById('pubgUid');
+        const freefireUid = document.getElementById('freefireUid');
+
+        // Open PUBG Popup
+        pubgBtn.addEventListener('click', () => {
+            pubgPopup.classList.add('active');
+        });
+
+        // Open Free Fire Popup
+        freefireBtn.addEventListener('click', () => {
+            freefirePopup.classList.add('active');
+        });
+
+        // Close Popups
+        closePubgPopup.addEventListener('click', () => {
+            pubgPopup.classList.remove('active');
+        });
+
+        closeFreefirePopup.addEventListener('click', () => {
+            freefirePopup.classList.remove('active');
+        });
+
+        // Close when clicking outside
+        [pubgPopup, freefirePopup].forEach(popup => {
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    popup.classList.remove('active');
+                }
+            });
+        });
+
+        // Copy UID functionality
+        copyPubgBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(pubgUid.textContent);
+            copyPubgBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyPubgBtn.innerHTML = '<i class="fas fa-copy"></i> Copy UID';
+            }, 2000);
+        });
+
+        copyFreefireBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(freefireUid.textContent);
+            copyFreefireBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyFreefireBtn.innerHTML = '<i class="fas fa-copy"></i> Copy ID';
+            }, 2000);
+        });
+
+        // Three Dot Menu Functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuContent = document.getElementById('menuContent');
+        const closeMenu = document.getElementById('closeMenu');
+        const menuLinks = document.getElementById('menuLinks');
+
+        // Toggle Menu
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('active');
+            menuContent.classList.add('active');
+        });
+
+        // Close Menu
+        closeMenu.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+            menuContent.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+            menuContent.classList.remove('active');
+        });
+
+        // Add links to menu (you can customize these as needed)
+        const links = [
+            { icon: 'fas fa-globe', text: 'Website', url: 'https://ahameedplayz.netlify.app' },
+            { icon: 'fab fa-facebook', text: 'Facebook', url: 'https://facebook.com/itzalif007' },
+            { icon: 'fab fa-youtube', text: 'YouTube', url: 'https://youtube.com/@Ahameedplayz' },
+            { icon: 'fab fa-instagram', text: 'Instagram', url: 'https://instagram.com/Ahameed.1' },
+            { icon: 'fab fa-tiktok', text: 'TikTok', url: 'https://tiktok.com/@Ahameedplayz' }
+        ];
+
+        links.forEach(link => {
+            const linkElement = document.createElement('a');
+            linkElement.className = 'menu-link';
+            linkElement.href = link.url;
+            linkElement.target = '_blank';
+            linkElement.innerHTML = `
+                <i class="${link.icon}"></i>
+                <span>${link.text}</span>
+                <i class="fas fa-external-link-alt"></i>
+            `;
+            menuLinks.appendChild(linkElement);
+        });
+
+        // Ripple effect for buttons
+        const buttons = document.querySelectorAll('.copy-btn, .game-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Get mouse position relative to button
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create ripple element
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                // Add ripple to button
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
